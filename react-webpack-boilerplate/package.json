@@ -1,0 +1,42 @@
+{
+  "name": "react-webpack-boilerplate",
+  "version": "1.0.0",
+  "description": "React + TypeScript + Redux Toolkit + Webpack boilerplate based on aqua-rent",
+  "main": "index.tsx",
+  "scripts": {
+    "start": "webpack serve --env mode=development --env port=3000",
+    "build:prod": "webpack --env mode=production",
+    "build:dev": "webpack --env mode=development",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.1.2"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/webpack-bundle-analyzer": "^4.6.3",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.0",
+    "sass": "^1.80.6",
+    "sass-loader": "^14.2.1",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.2.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3",
+    "webpack": "^5.93.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
