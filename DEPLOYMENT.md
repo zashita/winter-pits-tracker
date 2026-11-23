@@ -10,8 +10,8 @@ The Yandex browser API key is included in the built frontend, so it is visible t
 
 ## Deploy to Render Free
 
-The repository includes a Render Blueprint in `render.yaml`. Connect the GitHub repository to Render and create the Blueprint. Set `DATABASE_URL` to a PostgreSQL connection string from a separate database provider, and set `YANDEX_MAPS_API_KEY` to the browser API key. Render injects the Yandex variables into the Docker build so Webpack can configure the frontend. Keep `DB_SYNCHRONIZE=false`; the container initializes only the app's table with an idempotent `CREATE TABLE IF NOT EXISTS` statement.
+The repository includes a Render Blueprint in `render.yaml`. Connect the GitHub repository to Render and create the Blueprint. It provisions a free web service and a free Render Postgres database, then connects them through an internal database URL. Set `YANDEX_MAPS_API_KEY` to the browser API key in Render's environment settings. Render injects the Yandex variables into the Docker build so Webpack can configure the frontend. Keep `DB_SYNCHRONIZE=false`; the container initializes only the app's table with an idempotent `CREATE TABLE IF NOT EXISTS` statement.
 
-The app serves both the website and `/pits` API from the same origin. The free Render web service sleeps after inactivity and can take about a minute to wake. Supabase Free databases are limited to 500 MB and pause after a week of inactivity. These free tiers are intended for hobby projects and previews, not production availability guarantees.
+The app serves both the website and `/pits` API from the same origin. The free Render web service sleeps after inactivity and can take about a minute to wake. Render's free Postgres database expires after 30 days, after which the app will no longer be able to read its data. These free tiers are intended for hobby projects and previews, not production availability guarantees.
 
 For an external PostgreSQL database, use `DATABASE_URL` and set `DB_SSL=true`. For a local database connection without a URL, configure `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, and `DB_NAME`.

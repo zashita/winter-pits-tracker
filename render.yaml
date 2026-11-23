@@ -8,9 +8,11 @@ services:
     healthCheckPath: /health
     envVars:
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: winter-pits-db
+          property: connectionString
       - key: DB_SSL
-        value: "true"
+        value: "false"
       - key: DB_SYNCHRONIZE
         value: "false"
       - key: YANDEX_MAPS_API_URL
@@ -19,3 +21,10 @@ services:
         sync: false
       - key: YANDEX_MAPS_LANGUAGE
         value: ru_RU
+
+databases:
+  - name: winter-pits-db
+    databaseName: winter_pits
+    user: winter_pits
+    plan: free
+    postgresMajorVersion: "16"
