@@ -2,7 +2,7 @@
 .idea
 **/node_modules
 **/dist
-**/build
+/react-webpack-boilerplate/build
 **/coverage
 **/.env
 **/.env.local
