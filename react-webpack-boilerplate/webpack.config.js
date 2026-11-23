@@ -1,5 +1,6 @@
 require('ts-node').register({compilerOptions:{module:'commonjs'}});
 const path = require('path');
+require('./config/load-env')(__dirname);
 const { buildWebpackConfig } = require('./config/build/buildWebpackConfig');
 module.exports = (env) => {
   const paths = {

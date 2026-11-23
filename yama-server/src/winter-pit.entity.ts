@@ -11,6 +11,9 @@ export class WinterPit {
   @Column('float', { array: true, nullable: true })
   ends?: number[];
 
+  @Column('jsonb', { nullable: true })
+  shape?: [number, number][];
+
   @Column('float')
   square: number;
 

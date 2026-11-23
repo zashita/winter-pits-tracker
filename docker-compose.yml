@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the root .env file}
+      POSTGRES_DB: ${DB_NAME:-yama-bd}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-yama-bd}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        YANDEX_MAPS_API_URL: ${YANDEX_MAPS_API_URL:-https://api-maps.yandex.ru/v3/}
+        YANDEX_MAPS_API_KEY: ${YANDEX_MAPS_API_KEY:?Set YANDEX_MAPS_API_KEY in the environment}
+        YANDEX_MAPS_LANGUAGE: ${YANDEX_MAPS_LANGUAGE:-ru_RU}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      DB_SYNCHRONIZE: "false"
+      PORT: 4000
+    ports:
+      - "4000:4000"
+
+volumes:
+  postgres-data:

@@ -1,9 +1,16 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+require("./config/load-env")(__dirname);
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === "production";
   const MiniCssExtractPlugin = isProd ? require("mini-css-extract-plugin") : null;
+  const requiredYandexVars = ["YANDEX_MAPS_API_URL", "YANDEX_MAPS_API_KEY", "YANDEX_MAPS_LANGUAGE"];
+  const missingYandexVars = requiredYandexVars.filter((name) => !process.env[name]);
+  if (missingYandexVars.length) {
+    throw new Error(`Missing ${missingYandexVars.join(", ")}. Copy .env.example to .env.local and configure Yandex Maps.`);
+  }
   return {
     entry: path.resolve(__dirname, "src/index.tsx"),
     output: {
@@ -37,6 +44,11 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({ template: path.resolve(__dirname, "public/index.html"), favicon: path.resolve(__dirname, "public/favicon.ico") }),
+      new webpack.DefinePlugin({
+        __YANDEX_MAPS_API_URL__: JSON.stringify(process.env.YANDEX_MAPS_API_URL || ""),
+        __YANDEX_MAPS_API_KEY__: JSON.stringify(process.env.YANDEX_MAPS_API_KEY || ""),
+        __YANDEX_MAPS_LANGUAGE__: JSON.stringify(process.env.YANDEX_MAPS_LANGUAGE || ""),
+      }),
       ...(isProd ? [new MiniCssExtractPlugin({ filename: "css/[name].[contenthash:8].css", chunkFilename: "css/[name].[contenthash:8].chunk.css" })] : []),
     ],
     optimization: {

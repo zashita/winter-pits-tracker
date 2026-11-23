@@ -1,6 +1,5 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { WinterPitService } from './winter-pit.service';
-import { parseWinteringPits } from './parser';
 
 @Controller('pits')
 export class WinterPitController {
@@ -11,9 +10,4 @@ export class WinterPitController {
     return this.service.findAll();
   }
 
-  @Post('seed')
-  async seed() {
-    const data = await parseWinteringPits();
-    return this.service.seed(data);
-  }
 }

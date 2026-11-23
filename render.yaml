@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: winter-pits-tracker
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      - key: DB_SYNCHRONIZE
+        value: "false"
+      - key: YANDEX_MAPS_API_URL
+        value: https://api-maps.yandex.ru/v3/
+      - key: YANDEX_MAPS_API_KEY
+        sync: false
+      - key: YANDEX_MAPS_LANGUAGE
+        value: ru_RU

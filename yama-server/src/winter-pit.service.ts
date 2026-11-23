@@ -14,12 +14,17 @@ export class WinterPitService {
     return this.repo.find();
   }
 
+  async count(): Promise<number> {
+    return this.repo.count();
+  }
+
   async seed(pits: any[]): Promise<WinterPit[]> {
     await this.repo.clear();
     const entities = pits.map(p => {
       const entity = new WinterPit();
       entity.starts = [p.starts[0], p.starts[1]];
       entity.ends = p.ends ? [p.ends[0], p.ends[1]] : null;
+      entity.shape = p.shape || null;
       entity.square = p.square;
       entity.description = p.description || '';
       return entity;
