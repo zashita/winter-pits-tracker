@@ -33,7 +33,7 @@ module.exports = (env, argv) => {
             isProd ? MiniCssExtractPlugin.loader : "style-loader",
             { loader: "css-loader", options: { modules: { localIdentName: isProd ? "[hash:base64:8]" : "[name]__[local]__[hash:base64:5]" }, importLoaders: 1 } },
             "postcss-loader",
-            "sass-loader",
+            { loader: "sass-loader", options: { api: "modern" } },
           ],
         },
         { test: /\.css$/, exclude: /\.module\.(css|scss|sass)$/, use: [isProd ? MiniCssExtractPlugin.loader : "style-loader", "css-loader", "postcss-loader"] },

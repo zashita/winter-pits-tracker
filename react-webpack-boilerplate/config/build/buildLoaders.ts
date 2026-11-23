@@ -38,7 +38,7 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
                     },
                 },
             },
-            "sass-loader",
+            { loader: "sass-loader", options: { api: "modern" } },
         ],
     };
 
